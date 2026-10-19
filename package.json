@@ -1,0 +1,19 @@
+{
+  "name": "delete-your-dependencies",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "predev": "vite build",
+    "dev": "wrangler dev",
+    "predeploy": "vite build",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "tailwindcss": "^4.0.0",
+    "vite": "^8.0.0",
+    "wrangler": "^4.34.0"
+  }
+}

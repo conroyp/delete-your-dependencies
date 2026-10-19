@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/images/daily-grind-mark.svg" type="image/svg+xml" />
+    <title>The extras · Browser lab · The Daily Grind</title>
+    <link rel="preload" as="style" href="/build/assets/app.css" />
+    <link rel="stylesheet" href="/build/assets/app.css" />
+    <script type="module" src="/js/app.js"></script>
+    <link rel="stylesheet" href="/build/assets/fonts-C9MNnjVw.css" />
+  </head>
+  <body class="min-h-screen bg-cream text-ink" data-page="lab-extras">
+    <header
+      class="relative z-20 border-b border-ink/15 bg-cream/95 backdrop-blur"
+    >
+      <div
+        class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-4 lg:px-8"
+      >
+        <a
+          href="/index.html"
+          class="brand flex items-center gap-3.5"
+          aria-label="The Daily Grind home"
+        >
+          <svg
+            class="brand-mark"
+            viewBox="0 0 64 64"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path
+              class="brand-steam"
+              d="M24 6c-2.5 2.5 2.5 5 0 7.5S21.5 18.5 24 21M32 4c-2.5 2.5 2.5 5 0 7.5S29.5 16.5 32 19M40 6c-2.5 2.5 2.5 5 0 7.5S37.5 18.5 40 21"
+            />
+            <path d="M10 27h38v8c0 10.5-8.5 19-19 19S10 45.5 10 35z" />
+            <path d="M48 31h3.5a6 6 0 0 1 0 12H46" />
+            <path d="M10 59h38" />
+          </svg>
+          <span class="brand-words"
+            ><strong class="brand-name">The Daily Grind</strong
+            ><span class="brand-tagline"
+              >Good coffee. Brighter days.</span
+            ></span
+          >
+        </a>
+        <nav
+          class="flex flex-wrap items-center gap-2 text-sm font-bold"
+          aria-label="Main navigation"
+        >
+          <a class="nav-link" href="/index.html">The counter</a>
+          <a class="nav-link nav-active" href="/lab-screen.html">Browser lab</a>
+          <a
+            class="rounded-lg border border-ink bg-ink px-4 py-2 text-cream transition hover:bg-ink/90"
+            href="/order.html?id=147"
+            >Order #147 ↗</a
+          >
+        </nav>
+      </div>
+    </header>
+    <main class="mx-auto max-w-7xl px-5 py-8 lg:px-8 lg:py-12">
+      <div class="mb-9">
+        <p class="eyebrow mb-3">THE BROWSER LAB / HANDS ON</p>
+        <h1 class="display text-6xl leading-none sm:text-7xl">
+          Surprisingly <em class="text-coral">native.</em>
+        </h1>
+        <p class="mt-4 max-w-2xl text-lg text-ink/70">
+          Small experiments for the talk. Every button uses a browser API and
+          shows what happened.
+        </p>
+      </div>
+      <nav class="mb-9 flex flex-wrap gap-2" aria-label="Lab experiments">
+        <a href="/lab-screen.html" class="lab-tab"
+          ><span class="mr-1 text-lg">▣</span>Screen portal</a
+        >
+        <a href="/lab-camera.html" class="lab-tab"
+          ><span class="mr-1 text-lg">◎</span>Camera &amp; codes</a
+        >
+        <a href="/lab-files.html" class="lab-tab"
+          ><span class="mr-1 text-lg">▤</span>Real files</a
+        >
+        <a href="/lab-storage.html" class="lab-tab"
+          ><span class="mr-1 text-lg">◫</span>Private storage</a
+        >
+        <a href="/lab-ai.html" class="lab-tab"
+          ><span class="mr-1 text-lg">✳</span>Local AI</a
+        >
+        <a href="/lab-extras.html" class="lab-tab lab-tab-active"
+          ><span class="mr-1 text-lg">✺</span>The extras</a
+        >
+        <a href="/lab-lamp.html" class="lab-tab"
+          ><span class="mr-1 text-lg">◉</span>Pickup lamp</a
+        >
+        <a href="/lab-print.html" class="lab-tab"
+          ><span class="mr-1 text-lg">▤</span>Bluetooth print</a
+        >
+      </nav>
+      <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
+        <section class="lab-stage">
+          <div class="mb-7 flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="eyebrow">EXPERIMENT 06</p>
+              <h2 class="display mt-2 text-5xl">The extras</h2>
+              <p class="mt-2 text-ink/70">A handful more APIs</p>
+            </div>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="extra-card">
+              <span>☀</span>
+              <h3>Wake Lock</h3>
+              <p>Keep the kitchen display awake.</p>
+              <button id="wake-toggle" class="secondary-btn">Keep awake</button
+              ><small id="wake-status">Not active</small>
+            </div>
+            <div class="extra-card">
+              <span>▣</span>
+              <h3>Document PiP</h3>
+              <p>
+                Keep the live pickup queue visible. Leave this tab open and
+                change orders in another tab.
+              </p>
+              <button id="pip-open" class="secondary-btn">
+                Open floating queue</button
+              ><small id="pip-status">Window closed</small>
+            </div>
+            <div class="extra-card">
+              <span>◉</span>
+              <h3>EyeDropper</h3>
+              <p>Pick a colour from the screen.</p>
+              <button id="eye-open" class="secondary-btn">Pick a colour</button
+              ><small id="eye-status">No colour picked</small>
+              <div
+                id="eye-swatch"
+                class="mt-3 size-12 rounded-full border border-ink/15 bg-coral"
+              ></div>
+            </div>
+            <div class="extra-card">
+              <span>↗</span>
+              <h3>Web Share</h3>
+              <p>Hand off to the device share sheet.</p>
+              <button id="share-open" class="secondary-btn">
+                Share the shop</button
+              ><small id="share-status">Ready to share</small>
+            </div>
+          </div>
+          <div class="mt-6 rounded-2xl bg-yellow p-5">
+            <strong>Navigation API</strong>
+            <p class="mt-1 text-sm">
+              Click another lab tab, then return here. The Navigation API
+              reports where you went, and this tab remembers the last
+              destination in session storage.
+            </p>
+            <p id="navigation-status" class="result-line mt-3">
+              Waiting for a navigation in this tab…
+            </p>
+          </div>
+        </section>
+        <aside class="space-y-5">
+          <div class="rounded-2xl border border-ink/15 bg-mint p-6">
+            <p class="eyebrow">ON STAGE</p>
+            <h3 class="display mt-2 text-3xl">Make it visible.</h3>
+            <p class="mt-3 text-sm text-ink/70">
+              The controls are deliberately large and status messages stay on
+              the page, so screenshots can show what happened without DevTools.
+            </p>
+          </div>
+          <div class="rounded-2xl border border-ink/15 bg-pink p-6">
+            <p class="eyebrow">GOOD TO KNOW</p>
+            <p class="mt-3 text-sm text-ink/70">
+              Several APIs need HTTPS, a supported browser, a user gesture, a
+              permission grant, or compatible hardware. This site reports
+              unavailable features when possible.
+            </p>
+          </div>
+          <a
+            href="/index.html"
+            class="block rounded-2xl border border-ink/15 bg-yellow p-6 font-black transition hover:-translate-y-1"
+            >← Return to the counter</a
+          >
+        </aside>
+      </div>
+    </main>
+    <footer
+      class="mx-auto flex max-w-7xl flex-wrap justify-between gap-2 border-t border-ink/20 px-5 py-6 text-xs font-bold text-ink/60 lg:px-8"
+    >
+      <span>MADE FOR THE <a href="https://www.conroyp.com/speaking/delete-your-dependencies-what-the-browser-can-do-now" class="underline hover:text-ink">“DELETE YOUR DEPENDENCIES” TALK ↗</a></span>
+      <span>LOCAL DEMO · GOOD COFFEE NOT GUARANTEED</span>
+    </footer>
+    <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
+  </body>
+</html>

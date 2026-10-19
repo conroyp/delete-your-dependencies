@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/images/daily-grind-mark.svg" type="image/svg+xml" />
+    <title>Bluetooth printing · The Daily Grind</title>
+    <link rel="preload" as="style" href="/build/assets/app.css" />
+    <link rel="stylesheet" href="/build/assets/app.css" />
+    <script type="module" src="/js/app.js"></script>
+    <link rel="stylesheet" href="/build/assets/fonts-C9MNnjVw.css" />
+  </head>
+  <body class="min-h-screen bg-cream text-ink" data-page="lab-print">
+    <header
+      class="relative z-20 border-b border-ink/15 bg-cream/95 backdrop-blur"
+    >
+      <div
+        class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-4 lg:px-8"
+      >
+        <a
+          href="/index.html"
+          class="brand flex items-center gap-3.5"
+          aria-label="The Daily Grind home"
+        >
+          <svg
+            class="brand-mark"
+            viewBox="0 0 64 64"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path
+              class="brand-steam"
+              d="M24 6c-2.5 2.5 2.5 5 0 7.5S21.5 18.5 24 21M32 4c-2.5 2.5 2.5 5 0 7.5S29.5 16.5 32 19M40 6c-2.5 2.5 2.5 5 0 7.5S37.5 18.5 40 21"
+            />
+            <path d="M10 27h38v8c0 10.5-8.5 19-19 19S10 45.5 10 35z" />
+            <path d="M48 31h3.5a6 6 0 0 1 0 12H46" />
+            <path d="M10 59h38" />
+          </svg>
+          <span class="brand-words"
+            ><strong class="brand-name">The Daily Grind</strong
+            ><span class="brand-tagline"
+              >Good coffee. Brighter days.</span
+            ></span
+          >
+        </a>
+        <nav
+          class="flex flex-wrap items-center gap-2 text-sm font-bold"
+          aria-label="Main navigation"
+        >
+          <a class="nav-link" href="/index.html">The counter</a>
+          <a class="nav-link nav-active" href="/lab-screen.html">Browser lab</a>
+          <a
+            class="rounded-lg border border-ink bg-ink px-4 py-2 text-cream transition hover:bg-ink/90"
+            href="/order.html?id=147"
+            >Order #147 ↗</a
+          >
+        </nav>
+      </div>
+    </header>
+    <main class="mx-auto max-w-7xl px-5 py-8 lg:px-8 lg:py-12">
+      <div class="mb-9">
+        <p class="eyebrow mb-3">THE BROWSER LAB / HANDS ON</p>
+        <h1 class="display text-6xl leading-none sm:text-7xl">
+          Surprisingly <em class="text-coral">native.</em>
+        </h1>
+        <p class="mt-4 max-w-2xl text-lg text-ink/70">
+          Small experiments for the talk. Every button uses a browser API and
+          shows what happened.
+        </p>
+      </div>
+      <nav class="mb-9 flex flex-wrap gap-2" aria-label="Lab experiments">
+        <a href="/lab-screen.html" class="lab-tab"
+          ><span class="mr-1 text-lg">▣</span>Screen portal</a
+        >
+        <a href="/lab-camera.html" class="lab-tab"
+          ><span class="mr-1 text-lg">◎</span>Camera &amp; codes</a
+        >
+        <a href="/lab-files.html" class="lab-tab"
+          ><span class="mr-1 text-lg">▤</span>Real files</a
+        >
+        <a href="/lab-storage.html" class="lab-tab"
+          ><span class="mr-1 text-lg">◫</span>Private storage</a
+        >
+        <a href="/lab-ai.html" class="lab-tab"
+          ><span class="mr-1 text-lg">✳</span>Local AI</a
+        >
+        <a href="/lab-extras.html" class="lab-tab"
+          ><span class="mr-1 text-lg">✺</span>The extras</a
+        >
+        <a href="/lab-lamp.html" class="lab-tab"
+          ><span class="mr-1 text-lg">◉</span>Pickup lamp</a
+        >
+        <a href="/lab-print.html" class="lab-tab lab-tab-active"
+          ><span class="mr-1 text-lg">▤</span>Bluetooth print</a
+        >
+      </nav>
+      <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
+        <section class="lab-stage">
+          <div class="mb-7 flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="eyebrow">EXPERIMENT 08</p>
+              <h2 class="display mt-2 text-5xl">Bluetooth printing</h2>
+              <p class="mt-2 text-ink/70">Browser to receipt printer</p>
+            </div>
+          </div>
+          <div class="space-y-5">
+            <p>
+              Connect to a compatible Bluetooth Low Energy (BLE) receipt printer
+              and send a small ESC/POS-style receipt directly from this page.
+            </p>
+            <div
+              class="grid gap-4 rounded-2xl border border-ink/15 bg-white p-5 sm:grid-cols-2"
+            >
+              <label class="field-label"
+                >Printer service UUID
+                <input
+                  id="printer-service"
+                  class="field mt-2"
+                  value="0000ff00-0000-1000-8000-00805f9b34fb"
+                  spellcheck="false"
+                />
+              </label>
+              <label class="field-label"
+                >Write characteristic UUID
+                <input
+                  id="printer-characteristic"
+                  class="field mt-2"
+                  value="0000ff02-0000-1000-8000-00805f9b34fb"
+                  spellcheck="false"
+                />
+              </label>
+              <label class="field-label sm:col-span-2"
+                >Printable width in dots
+                <input
+                  id="printer-width"
+                  class="field mt-2 max-w-48"
+                  type="number"
+                  min="128"
+                  max="576"
+                  step="8"
+                  value="384"
+                />
+                <span class="mt-1 block text-xs font-normal text-ink/55"
+                  >384 dots is common for 58 mm receipt printers; check your
+                  printer’s manual.</span
+                >
+              </label>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <button id="printer-connect" class="primary-btn">
+                Connect printer ↗
+              </button>
+              <button id="printer-disconnect" class="secondary-btn" disabled>
+                Disconnect
+              </button>
+              <button id="printer-print" class="secondary-btn" disabled>
+                Print sample
+              </button>
+            </div>
+            <p id="printer-device" class="text-sm font-semibold text-ink/70">
+              No printer connected
+            </p>
+            <p
+              id="printer-status"
+              class="result-line"
+              role="status"
+              aria-live="polite"
+            >
+              Ready. Use Chrome or Edge over HTTPS with a compatible BLE
+              printer.
+            </p>
+            <p class="text-sm text-ink/65">
+              After the first approval, this page tries to reconnect
+              automatically when opened again. The printer must be powered on
+              and in range; if automatic reconnect is unavailable, press Connect
+              to choose it.
+            </p>
+            <div class="grid gap-5 md:grid-cols-2">
+              <div
+                class="overflow-hidden rounded-2xl border border-ink/15 bg-white p-5"
+              >
+                <p class="eyebrow mb-3">RECEIPT PREVIEW</p>
+                <div
+                  class="receipt-preview mx-auto max-w-64 bg-[#fffdf5] px-5 py-3 text-center font-mono text-xs leading-5"
+                >
+                  <div class="h-10" aria-hidden="true"></div>
+                  <div class="mx-auto w-full max-w-48">
+                    <img
+                      class="block h-auto w-full"
+                      src="/images/square1-logo.svg"
+                      alt="Square1"
+                    />
+                  </div>
+                  <p class="mt-3">
+                    Hello Square1!<br />I am a bluetooth printer.<br />Nice to
+                    meet you :)
+                  </p>
+                  <div class="h-12" aria-hidden="true"></div>
+                </div>
+              </div>
+              <div class="rounded-2xl border border-ink/15 bg-white p-5">
+                <p class="eyebrow">WHAT THE PAGE SENDS</p>
+                <p class="mt-3 text-sm text-ink/70">
+                  Four blank lines, the attached mark, the three greeting lines,
+                  then six blank lines for clean spacing.
+                </p>
+                <p class="mt-3 text-sm text-ink/70">
+                  The mark is converted to black-and-white raster data before it
+                  is sent.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <aside class="space-y-5">
+          <div class="rounded-2xl border border-ink/15 bg-mint p-6">
+            <p class="eyebrow">ON STAGE</p>
+            <h3 class="display mt-2 text-3xl">A direct print.</h3>
+            <p class="mt-3 text-sm text-ink/70">
+              Choose a device, connect to its writable GATT characteristic, and
+              send the image and text as printer bytes. No server or print
+              dialog is involved.
+            </p>
+          </div>
+          <div class="rounded-2xl border border-ink/15 bg-pink p-6">
+            <p class="eyebrow">GOOD TO KNOW</p>
+            <p class="mt-3 text-sm text-ink/70">
+              Bluetooth printers do not share one universal BLE service or print
+              protocol. The defaults are a common ESC/POS-style profile; enter
+              the service and characteristic UUIDs for your printer if they
+              differ. Classic Bluetooth-only printers will not appear as GATT
+              devices.
+            </p>
+          </div>
+          <a
+            href="/index.html"
+            class="block rounded-2xl border border-ink/15 bg-yellow p-6 font-black transition hover:-translate-y-1"
+            >← Return to the counter</a
+          >
+        </aside>
+      </div>
+    </main>
+    <footer
+      class="mx-auto flex max-w-7xl flex-wrap justify-between gap-2 border-t border-ink/20 px-5 py-6 text-xs font-bold text-ink/60 lg:px-8"
+    >
+      <span
+        >MADE FOR THE
+        <a
+          href="https://www.conroyp.com/speaking/delete-your-dependencies-what-the-browser-can-do-now"
+          class="underline hover:text-ink"
+          >“DELETE YOUR DEPENDENCIES” TALK ↗</a
+        ></span
+      >
+      <span>LOCAL DEMO · GOOD COFFEE NOT GUARANTEED</span>
+    </footer>
+    <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
+  </body>
+</html>

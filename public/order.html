@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/images/daily-grind-mark.svg" type="image/svg+xml" />
+    <title>Order #147 · The Daily Grind</title>
+    <link rel="preload" as="style" href="/build/assets/app.css" />
+    <link rel="stylesheet" href="/build/assets/app.css" />
+    <script type="module" src="/js/app.js"></script>
+    <link rel="stylesheet" href="/build/assets/fonts-C9MNnjVw.css" />
+  </head>
+  <body class="min-h-screen bg-cream text-ink" data-page="order-detail">
+    <header
+      class="relative z-20 border-b border-ink/15 bg-cream/95 backdrop-blur"
+    >
+      <div
+        class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-4 lg:px-8"
+      >
+        <a
+          href="/index.html"
+          class="brand flex items-center gap-3.5"
+          aria-label="The Daily Grind home"
+        >
+          <svg
+            class="brand-mark"
+            viewBox="0 0 64 64"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path
+              class="brand-steam"
+              d="M24 6c-2.5 2.5 2.5 5 0 7.5S21.5 18.5 24 21M32 4c-2.5 2.5 2.5 5 0 7.5S29.5 16.5 32 19M40 6c-2.5 2.5 2.5 5 0 7.5S37.5 18.5 40 21"
+            />
+            <path d="M10 27h38v8c0 10.5-8.5 19-19 19S10 45.5 10 35z" />
+            <path d="M48 31h3.5a6 6 0 0 1 0 12H46" />
+            <path d="M10 59h38" />
+          </svg>
+          <span class="brand-words"
+            ><strong class="brand-name">The Daily Grind</strong
+            ><span class="brand-tagline"
+              >Good coffee. Brighter days.</span
+            ></span
+          >
+        </a>
+        <nav
+          class="flex flex-wrap items-center gap-2 text-sm font-bold"
+          aria-label="Main navigation"
+        >
+          <a class="nav-link nav-active" href="/index.html">The counter</a>
+          <a class="nav-link" href="/lab-screen.html">Browser lab</a>
+          <a
+            class="rounded-lg border border-ink bg-ink px-4 py-2 text-cream transition hover:bg-ink/90"
+            href="/order.html?id=147"
+            >Order #147 ↗</a
+          >
+        </nav>
+      </div>
+    </header>
+    <main class="mx-auto max-w-7xl px-5 py-8 lg:px-8 lg:py-12">
+      <a
+        href="/index.html"
+        class="mb-8 inline-flex items-center gap-2 font-black hover:underline"
+        >← Back to the counter</a
+      >
+      <div
+        class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]"
+        data-order-id="147"
+      >
+        <section
+          class="overflow-hidden rounded-2xl border border-ink/15 bg-white shadow-[0_18px_48px_rgba(31,45,38,.08)]"
+        >
+          <div
+            class="flex flex-wrap items-start justify-between gap-5 bg-yellow px-8 py-8 md:px-12"
+          >
+            <div>
+              <p class="eyebrow">THE COUNTER / ORDER DETAILS</p>
+              <h1 class="display mt-2 text-6xl leading-none md:text-8xl">
+                Order
+                <span
+                  data-order-transition
+                  style="view-transition-name: order-147"
+                  class="text-coral"
+                  >#147</span
+                >
+                <script>
+                  (() => {
+                    const id = new URLSearchParams(location.search).get("id");
+                    const heading = document.querySelector(
+                      "[data-order-transition]",
+                    );
+                    if (!heading || !/^\d+$/.test(id || "")) return;
+                    heading.textContent = `#${id}`;
+                    heading.style.viewTransitionName = `order-${id}`;
+                  })();
+                </script>
+              </h1>
+              <p class="mt-4 text-lg text-ink/70">Made fresh, with care.</p>
+            </div>
+          </div>
+          <div class="grid gap-8 px-8 py-9 md:grid-cols-2 md:px-12">
+            <div>
+              <p class="eyebrow">CUSTOMER</p>
+              <p class="mt-2 text-3xl font-black" data-customer>Ava</p>
+              <input
+                class="field mt-2 text-2xl font-black"
+                data-customer-input
+                aria-label="Customer name"
+                maxlength="100"
+                hidden
+              />
+            </div>
+            <div>
+              <p class="eyebrow">DRINK</p>
+              <p class="mt-2 text-3xl font-black" data-drink>Flat White × 1</p>
+            </div>
+            <div>
+              <p class="eyebrow">ORDER NOTES</p>
+              <p class="mt-2 text-lg text-ink/75" data-notes>
+                Extra hot, please
+              </p>
+              <textarea
+                class="field mt-2 min-h-24"
+                data-notes-input
+                aria-label="Order notes"
+                maxlength="500"
+                hidden
+              ></textarea>
+            </div>
+            <div>
+              <p class="eyebrow">CURRENT STATUS</p>
+              <span class="status-badge status-new mt-2" data-status>NEW</span>
+            </div>
+          </div>
+          <div
+            class="flex flex-wrap items-center gap-4 border-t border-ink/10 px-8 py-6 md:px-12"
+          >
+            <button id="edit-order" type="button" class="secondary-btn">
+              Edit details
+            </button>
+            <button
+              id="save-order-details"
+              type="button"
+              class="primary-btn"
+              hidden
+            >
+              Save details
+            </button>
+            <button
+              id="cancel-order-edit"
+              type="button"
+              class="secondary-btn"
+              hidden
+            >
+              Cancel
+            </button>
+            <p
+              id="order-edit-status"
+              class="text-sm text-ink/60"
+              role="status"
+              aria-live="polite"
+            ></p>
+            <button class="primary-btn js-cycle-status" data-status="new">
+              Move to next stage →</button
+            ><button
+              type="button"
+              popovertarget="order-actions"
+              class="secondary-btn"
+            >
+              More actions ⋯
+            </button>
+            <div id="order-actions" popover class="actions-popover">
+              <button id="copy-order-link">Copy order link</button
+              ><button id="copy-pickup-code">Copy pickup code</button>
+            </div>
+          </div>
+        </section>
+        <aside class="space-y-6">
+          <section class="rounded-2xl border border-ink/15 bg-white p-6">
+            <p class="eyebrow">ORDER TOTAL</p>
+            <h2 class="display mt-2 text-3xl">The receipt.</h2>
+            <div class="mt-5 space-y-3 text-sm">
+              <div class="flex justify-between gap-3">
+                <span data-receipt-line>Flat White × 1</span
+                ><span data-subtotal>€4.50</span>
+              </div>
+              <div
+                id="receipt-discount-row"
+                class="flex justify-between gap-3 text-green-800"
+              >
+                <span>Smile discount · 10%</span
+                ><span data-discount>−€0.45</span>
+              </div>
+              <div
+                class="flex justify-between gap-3 border-t border-ink/15 pt-3 text-lg font-semibold"
+              >
+                <span>Total due</span><span data-total>€4.05</span>
+              </div>
+            </div>
+            <p class="mt-4 text-xs text-ink/60">
+              Demo order · pay at the counter
+            </p>
+          </section>
+          <section class="rounded-2xl border border-ink/15 bg-mint p-6">
+            <p class="eyebrow">CROSS-TAB MAGIC</p>
+            <h2 class="display mt-2 text-3xl">Open this twice.</h2>
+            <p class="mt-3 text-sm text-ink/75">
+              Keep this detail view open, then edit its customer or notes in
+              another tab. This page refreshes the order from this browser’s
+              storage after a BroadcastChannel message.
+            </p>
+            <a
+              href="/index.html"
+              target="_blank"
+              rel="noopener"
+              class="mt-5 inline-block font-black underline underline-offset-4"
+              >Open counter in new tab ↗</a
+            >
+            <p
+              id="sync-status"
+              class="mt-5 rounded-xl bg-white/70 px-3 py-2 text-xs font-bold"
+            >
+              Waiting for a local update…
+            </p>
+            <p id="poll-status" class="mt-2 text-xs font-black text-ink/60">
+              Checking tab coordination…
+            </p>
+          </section>
+          <section class="rounded-2xl border border-ink/15 bg-lavender p-6">
+            <p class="eyebrow">PICKUP LAMP</p>
+            <h2 class="display mt-2 text-3xl">Make it glow.</h2>
+            <p class="mt-2 text-sm">
+              Connect the Playbulb, then mark this order ready.
+            </p>
+            <a
+              class="mt-4 inline-block font-black underline underline-offset-4"
+              href="/lab-lamp.html"
+              >Open lamp controls ↗</a
+            >
+          </section>
+        </aside>
+      </div>
+    </main>
+    <footer
+      class="mx-auto flex max-w-7xl flex-wrap justify-between gap-2 border-t border-ink/20 px-5 py-6 text-xs font-bold text-ink/60 lg:px-8"
+    >
+      <span>MADE FOR THE <a href="https://www.conroyp.com/speaking/delete-your-dependencies-what-the-browser-can-do-now" class="underline hover:text-ink">“DELETE YOUR DEPENDENCIES” TALK ↗</a></span>
+      <span>LOCAL DEMO · GOOD COFFEE NOT GUARANTEED</span>
+    </footer>
+    <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
+  </body>
+</html>

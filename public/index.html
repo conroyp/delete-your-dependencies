@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/images/daily-grind-mark.svg" type="image/svg+xml" />
+    <title>The counter · The Daily Grind</title>
+    <link rel="preload" as="style" href="/build/assets/app.css" />
+    <link rel="stylesheet" href="/build/assets/app.css" />
+    <script type="module" src="/js/app.js"></script>
+    <link rel="stylesheet" href="/build/assets/fonts-C9MNnjVw.css" />
+  </head>
+  <body class="min-h-screen bg-cream text-ink" data-page="orders">
+    <header
+      class="relative z-20 border-b border-ink/15 bg-cream/95 backdrop-blur"
+    >
+      <div
+        class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-4 lg:px-8"
+      >
+        <a
+          href="/index.html"
+          class="brand flex items-center gap-3.5"
+          aria-label="The Daily Grind home"
+        >
+          <svg
+            class="brand-mark"
+            viewBox="0 0 64 64"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path
+              class="brand-steam"
+              d="M24 6c-2.5 2.5 2.5 5 0 7.5S21.5 18.5 24 21M32 4c-2.5 2.5 2.5 5 0 7.5S29.5 16.5 32 19M40 6c-2.5 2.5 2.5 5 0 7.5S37.5 18.5 40 21"
+            />
+            <path d="M10 27h38v8c0 10.5-8.5 19-19 19S10 45.5 10 35z" />
+            <path d="M48 31h3.5a6 6 0 0 1 0 12H46" />
+            <path d="M10 59h38" />
+          </svg>
+          <span class="brand-words"
+            ><strong class="brand-name">The Daily Grind</strong
+            ><span class="brand-tagline"
+              >Good coffee. Brighter days.</span
+            ></span
+          >
+        </a>
+        <nav
+          class="flex flex-wrap items-center gap-2 text-sm font-bold"
+          aria-label="Main navigation"
+        >
+          <a class="nav-link nav-active" href="/index.html">The counter</a>
+          <a class="nav-link" href="/lab-screen.html">Browser lab</a>
+          <a
+            class="rounded-lg border border-ink bg-ink px-4 py-2 text-cream transition hover:bg-ink/90"
+            href="/order.html?id=147"
+            >Order #147 ↗</a
+          >
+        </nav>
+      </div>
+    </header>
+    <main class="mx-auto max-w-7xl px-5 py-8 lg:px-8 lg:py-12">
+      <div class="grid gap-10 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <div>
+          <div class="mb-8 flex flex-wrap items-end justify-between gap-5">
+            <div>
+              <p class="eyebrow mb-3">✦ THE COFFEE SHOP / LIVE ORDERS</p>
+              <h1 class="display text-6xl leading-[.95] sm:text-7xl">
+                Fresh off<br /><em class="text-coral">the press.</em>
+              </h1>
+              <p class="mt-5 max-w-xl text-lg text-ink/70">
+                A tiny coffee shop with rather more browser power than it needs.
+              </p>
+            </div>
+            <div
+              class="rounded-full border border-ink/15 bg-mint px-5 py-3 text-sm font-black"
+            >
+              <span
+                class="mr-2 inline-block size-2 rounded-full bg-green-700"
+              ></span
+              ><span id="live-count">0</span> IN THE QUEUE
+            </div>
+          </div>
+          <div
+            class="rounded-2xl border border-ink/15 bg-white shadow-[0_18px_48px_rgba(31,45,38,.08)]"
+          >
+            <div
+              class="flex flex-wrap items-center justify-between gap-3 border-b border-ink/15 px-6 py-5"
+            >
+              <div>
+                <h2 class="text-2xl font-black tracking-tight">
+                  Today's orders
+                </h2>
+                <p class="text-sm text-ink/60">
+                  Open an order in another tab, then change its status here.
+                </p>
+                <p id="poll-status" class="mt-1 text-xs font-black text-ink/60">
+                  Checking tab coordination…
+                </p>
+              </div>
+              <span class="rounded-full bg-yellow px-3 py-1 text-xs font-black"
+                >BROADCASTCHANNEL DEMO</span
+              >
+            </div>
+            <div class="divide-y divide-ink/10" id="orders-list"></div>
+          </div>
+        </div>
+        <aside class="space-y-6">
+          <section
+            class="rounded-2xl border border-ink/15 bg-yellow p-6 shadow-[0_18px_48px_rgba(31,45,38,.08)]"
+          >
+            <p class="eyebrow">AT THE TILL</p>
+            <h2 class="display mt-2 text-4xl">One more,<br />please.</h2>
+            <form
+              id="order-form"
+              method="POST"
+              action="/orders"
+              class="mt-6 space-y-4"
+              data-prices='{"Flat White":450,"Cappuccino":420,"Oat Latte":490,"Espresso":300,"Matcha Latte":520,"Long Black":380}'
+              data-smile-code="SMILE10"
+            >
+              <label class="field-label"
+                >Name<input
+                  name="customer"
+                  required
+                  maxlength="80"
+                  value=""
+                  placeholder="Your name"
+                  class="field"
+              /></label>
+              <label class="field-label"
+                >The good stuff<select name="drink" class="field">
+                  <option value="Flat White" selected>
+                    Flat White · €4.50
+                  </option>
+                  <option value="Cappuccino">Cappuccino · €4.20</option>
+                  <option value="Oat Latte">Oat Latte · €4.90</option>
+                  <option value="Espresso">Espresso · €3.00</option>
+                  <option value="Matcha Latte">Matcha Latte · €5.20</option>
+                  <option value="Long Black">Long Black · €3.80</option>
+                </select></label
+              >
+              <label class="field-label"
+                >How many?<input
+                  name="quantity"
+                  type="number"
+                  min="1"
+                  max="9"
+                  value="1"
+                  required
+                  class="field"
+              /></label>
+              <label class="field-label"
+                >Discount code<input
+                  name="discount_code"
+                  maxlength="32"
+                  autocomplete="off"
+                  value=""
+                  placeholder="Have a smile code?"
+                  class="field"
+              /></label>
+              <p
+                id="discount-feedback"
+                class="text-xs text-ink/60"
+                aria-live="polite"
+              >
+                Smile for 10% off, then enter your code here.
+              </p>
+              <label class="field-label"
+                >Notes<textarea
+                  name="notes"
+                  rows="2"
+                  maxlength="500"
+                  placeholder="Extra hot? Oat milk? A tiny poem?"
+                  class="field auto-size"
+                ></textarea>
+              </label>
+              <div
+                class="rounded-xl border border-ink/15 bg-white/75 p-4 text-sm"
+                aria-live="polite"
+              >
+                <div class="flex justify-between gap-3">
+                  <span>Subtotal</span
+                  ><span id="order-subtotal" class="font-semibold">€4.50</span>
+                </div>
+                <div
+                  id="order-discount-row"
+                  class="mt-2 flex justify-between gap-3 text-green-800"
+                  hidden
+                >
+                  <span>Smile discount · 10%</span
+                  ><span id="order-discount">−€0.45</span>
+                </div>
+                <div
+                  class="mt-3 flex justify-between gap-3 border-t border-ink/15 pt-3 text-base font-semibold"
+                >
+                  <span>Total due</span><span id="order-total">€4.50</span>
+                </div>
+              </div>
+              <button class="primary-btn w-full" type="submit">
+                Place order · <span id="order-submit-total">€4.50</span>
+                <span>↗</span>
+              </button>
+              <p class="text-center text-xs text-ink/60">
+                Demo checkout · pay at the counter
+              </p>
+              <button
+                id="reset-demo-data"
+                class="mx-auto block text-xs text-ink/50 underline underline-offset-4"
+                type="button"
+              >
+                Reset this browser’s demo orders
+              </button>
+            </form>
+          </section>
+          <section class="rounded-2xl border border-ink/15 bg-pink p-6">
+            <img
+              src="/images/daily-grind-smile-promo.webp"
+              width="774"
+              height="632"
+              alt="The Daily Grind promotion: Smile and get 10% off"
+              class="mb-5 w-full rounded-xl border border-ink/10"
+            />
+            <p class="eyebrow">TODAY'S SPECIAL</p>
+            <h3 class="display mt-2 text-3xl">Smile, save 10%.</h3>
+            <p class="mt-3 text-sm text-ink/70">
+              Smile in the camera lab to reveal a code, then come back to order.
+            </p>
+            <a
+              class="mt-5 inline-block font-black underline underline-offset-4"
+              href="/lab-camera.html"
+              >Get the smile code ↗</a
+            >
+          </section>
+        </aside>
+      </div>
+    </main>
+    <footer
+      class="mx-auto flex max-w-7xl flex-wrap justify-between gap-2 border-t border-ink/20 px-5 py-6 text-xs font-bold text-ink/60 lg:px-8"
+    >
+      <span>MADE FOR THE <a href="https://www.conroyp.com/speaking/delete-your-dependencies-what-the-browser-can-do-now" class="underline hover:text-ink">“DELETE YOUR DEPENDENCIES” TALK ↗</a></span>
+      <span>LOCAL DEMO · GOOD COFFEE NOT GUARANTEED</span>
+    </footer>
+    <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
+  </body>
+</html>

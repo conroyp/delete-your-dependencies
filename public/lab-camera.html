@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/images/daily-grind-mark.svg" type="image/svg+xml" />
+    <title>Camera &amp; codes · Browser lab · The Daily Grind</title>
+    <link rel="preload" as="style" href="/build/assets/app.css" />
+    <link rel="stylesheet" href="/build/assets/app.css" />
+    <script type="module" src="/js/app.js"></script>
+    <link rel="stylesheet" href="/build/assets/fonts-C9MNnjVw.css" />
+  </head>
+  <body class="min-h-screen bg-cream text-ink" data-page="lab-camera">
+    <header
+      class="relative z-20 border-b border-ink/15 bg-cream/95 backdrop-blur"
+    >
+      <div
+        class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-5 py-4 lg:px-8"
+      >
+        <a
+          href="/index.html"
+          class="brand flex items-center gap-3.5"
+          aria-label="The Daily Grind home"
+        >
+          <svg
+            class="brand-mark"
+            viewBox="0 0 64 64"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path
+              class="brand-steam"
+              d="M24 6c-2.5 2.5 2.5 5 0 7.5S21.5 18.5 24 21M32 4c-2.5 2.5 2.5 5 0 7.5S29.5 16.5 32 19M40 6c-2.5 2.5 2.5 5 0 7.5S37.5 18.5 40 21"
+            />
+            <path d="M10 27h38v8c0 10.5-8.5 19-19 19S10 45.5 10 35z" />
+            <path d="M48 31h3.5a6 6 0 0 1 0 12H46" />
+            <path d="M10 59h38" />
+          </svg>
+          <span class="brand-words"
+            ><strong class="brand-name">The Daily Grind</strong
+            ><span class="brand-tagline"
+              >Good coffee. Brighter days.</span
+            ></span
+          >
+        </a>
+        <nav
+          class="flex flex-wrap items-center gap-2 text-sm font-bold"
+          aria-label="Main navigation"
+        >
+          <a class="nav-link" href="/index.html">The counter</a>
+          <a class="nav-link nav-active" href="/lab-screen.html">Browser lab</a>
+          <a
+            class="rounded-lg border border-ink bg-ink px-4 py-2 text-cream transition hover:bg-ink/90"
+            href="/order.html?id=147"
+            >Order #147 ↗</a
+          >
+        </nav>
+      </div>
+    </header>
+    <main class="mx-auto max-w-7xl px-5 py-8 lg:px-8 lg:py-12">
+      <div class="mb-9">
+        <p class="eyebrow mb-3">THE BROWSER LAB / HANDS ON</p>
+        <h1 class="display text-6xl leading-none sm:text-7xl">
+          Surprisingly <em class="text-coral">native.</em>
+        </h1>
+        <p class="mt-4 max-w-2xl text-lg text-ink/70">
+          Small experiments for the talk. Every button uses a browser API and
+          shows what happened.
+        </p>
+      </div>
+      <nav class="mb-9 flex flex-wrap gap-2" aria-label="Lab experiments">
+        <a href="/lab-screen.html" class="lab-tab"
+          ><span class="mr-1 text-lg">▣</span>Screen portal</a
+        >
+        <a href="/lab-camera.html" class="lab-tab lab-tab-active"
+          ><span class="mr-1 text-lg">◎</span>Camera &amp; codes</a
+        >
+        <a href="/lab-files.html" class="lab-tab"
+          ><span class="mr-1 text-lg">▤</span>Real files</a
+        >
+        <a href="/lab-storage.html" class="lab-tab"
+          ><span class="mr-1 text-lg">◫</span>Private storage</a
+        >
+        <a href="/lab-ai.html" class="lab-tab"
+          ><span class="mr-1 text-lg">✳</span>Local AI</a
+        >
+        <a href="/lab-extras.html" class="lab-tab"
+          ><span class="mr-1 text-lg">✺</span>The extras</a
+        >
+        <a href="/lab-lamp.html" class="lab-tab"
+          ><span class="mr-1 text-lg">◉</span>Pickup lamp</a
+        >
+        <a href="/lab-print.html" class="lab-tab"
+          ><span class="mr-1 text-lg">▤</span>Bluetooth print</a
+        >
+      </nav>
+      <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
+        <section class="lab-stage">
+          <div class="mb-7 flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="eyebrow">EXPERIMENT 02</p>
+              <h2 class="display mt-2 text-5xl">Camera &amp; codes</h2>
+              <p class="mt-2 text-ink/70">See what the browser sees</p>
+            </div>
+          </div>
+          <div class="space-y-5">
+            <p>
+              Start the camera, hold still, then smile for one second. Face
+              landmarks and smile analysis run on this device with MediaPipe, in
+              a Web Worker.
+            </p>
+            <div class="flex flex-wrap gap-3">
+              <button id="camera-start" class="primary-btn">
+                Start smile camera ↗</button
+              ><button id="face-check" class="secondary-btn" disabled>
+                Try native FaceDetector</button
+              ><button id="qr-check" class="secondary-btn" disabled>
+                Scan live QR</button
+              ><button id="camera-stop" class="secondary-btn" disabled>
+                Stop
+              </button>
+            </div>
+            <div class="media-wrap media-wrap-camera">
+              <video id="camera-video" autoplay muted playsinline></video
+              ><canvas id="camera-overlay"></canvas>
+              <div id="camera-placeholder" class="media-placeholder">
+                Camera preview
+              </div>
+            </div>
+            <p id="camera-status" class="result-line">Camera off.</p>
+            <div
+              class="h-3 overflow-hidden rounded-full border border-ink bg-white"
+            >
+              <div
+                id="smile-progress"
+                class="h-full w-0 bg-coral transition-[width]"
+              ></div>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <button
+                id="smile-apply"
+                class="primary-btn"
+                data-order-url="/?discount=SMILE10"
+                disabled
+              >
+                Order with discount ↗</button
+              ><span
+                id="smile-code"
+                class="rounded-lg bg-mint px-3 py-2 text-sm font-semibold"
+                hidden
+                >Code: SMILE10</span
+              ><span id="smile-score" class="text-sm font-black"
+                >Smile score: —</span
+              >
+            </div>
+            <div class="rounded-2xl bg-pink p-5">
+              <p class="eyebrow">LOYALTY CARD QR</p>
+              <p class="mt-2 text-sm">
+                Scan this with another camera, or upload the image below to test
+                BarcodeDetector.
+              </p>
+              <div class="mt-4 flex flex-wrap items-center gap-4">
+                <img
+                  src="/images/loyalty-147.png"
+                  alt="Sample loyalty QR code containing DAILY-GRIND-LOYALTY-147"
+                  class="size-32 border border-ink/15 bg-white p-2"
+                />
+                <div>
+                  <a
+                    href="/images/loyalty-147.png"
+                    target="_blank"
+                    rel="noopener"
+                    class="font-black underline"
+                    >Open sample QR ↗</a
+                  ><label class="field-label mt-3"
+                    >Scan an image<input
+                      id="qr-file"
+                      type="file"
+                      accept="image/*"
+                      class="text-sm"
+                  /></label>
+                </div>
+              </div>
+              <p id="qr-file-status" class="result-line mt-4">
+                Sample value: DAILY-GRIND-LOYALTY-147
+              </p>
+            </div>
+            <p class="text-sm text-ink/60">
+              The native FaceDetector button tests the browser API from the
+              slide. MediaPipe supplies the smile classifier; the app reports
+              each separately.
+            </p>
+          </div>
+        </section>
+        <aside class="space-y-5">
+          <div class="rounded-2xl border border-ink/15 bg-mint p-6">
+            <p class="eyebrow">ON STAGE</p>
+            <h3 class="display mt-2 text-3xl">Make it visible.</h3>
+            <p class="mt-3 text-sm text-ink/70">
+              The controls are deliberately large and status messages stay on
+              the page, so screenshots can show what happened without DevTools.
+            </p>
+          </div>
+          <div class="rounded-2xl border border-ink/15 bg-pink p-6">
+            <p class="eyebrow">GOOD TO KNOW</p>
+            <p class="mt-3 text-sm text-ink/70">
+              Several APIs need HTTPS, a supported browser, a user gesture, a
+              permission grant, or compatible hardware. This site reports
+              unavailable features when possible.
+            </p>
+          </div>
+          <a
+            href="/index.html"
+            class="block rounded-2xl border border-ink/15 bg-yellow p-6 font-black transition hover:-translate-y-1"
+            >← Return to the counter</a
+          >
+        </aside>
+      </div>
+    </main>
+    <footer
+      class="mx-auto flex max-w-7xl flex-wrap justify-between gap-2 border-t border-ink/20 px-5 py-6 text-xs font-bold text-ink/60 lg:px-8"
+    >
+      <span>MADE FOR THE <a href="https://www.conroyp.com/speaking/delete-your-dependencies-what-the-browser-can-do-now" class="underline hover:text-ink">“DELETE YOUR DEPENDENCIES” TALK ↗</a></span>
+      <span>LOCAL DEMO · GOOD COFFEE NOT GUARANTEED</span>
+    </footer>
+    <div id="toast" role="status" aria-live="polite" class="toast" hidden></div>
+  </body>
+</html>
