@@ -14,3 +14,4 @@ const labs = {
 };
 const lab = labs[document.body.dataset.page];
 if (lab) import(lab);
+if (document.getElementById("code-qr-pip")) import("./get-the-code.js");
