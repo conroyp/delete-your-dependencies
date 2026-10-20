@@ -115,6 +115,7 @@ public/                      the whole site (deploy this folder)
   js/runtime.js              localStorage order store (window.dailyGrindOrders)
   js/orders.js               counter: BroadcastChannel, Web Locks, live updates
   js/app.js                  entry point: loads only the current page's demo
+  js/get-the-code.js         homepage "Get the code" QR, poppable via Document PiP
   js/labs/*.js               one module per lab demo (lamp.js, camera.js, …)
   js/face-detector.js        main-thread side of the face worker
   face-landmarker.worker.js  MediaPipe (from jsDelivr) running off the main thread

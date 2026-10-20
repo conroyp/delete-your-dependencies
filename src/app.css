@@ -492,7 +492,8 @@ button {
   width: auto;
   padding-block: 0.6rem;
 }
-#lamp-pip[hidden] {
+#lamp-pip[hidden],
+#code-qr-pip[hidden] {
   display: none;
 }
 .lamp-custom input[type="color"] {
