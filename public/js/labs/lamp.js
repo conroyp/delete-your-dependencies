@@ -16,6 +16,29 @@ const rainbowColours = [
   [140, 0, 255],
   [255, 0, 160],
 ];
+// Dots and dashes for each letter and digit. Other characters are skipped.
+// prettier-ignore
+const morseCode = {
+  A: ".-", B: "-...", C: "-.-.", D: "-..", E: ".", F: "..-.", G: "--.",
+  H: "....", I: "..", J: ".---", K: "-.-", L: ".-..", M: "--", N: "-.",
+  O: "---", P: ".--.", Q: "--.-", R: ".-.", S: "...", T: "-", U: "..-",
+  V: "...-", W: ".--", X: "-..-", Y: "-.--", Z: "--..",
+  0: "-----", 1: ".----", 2: "..---", 3: "...--", 4: "....-",
+  5: ".....", 6: "-....", 7: "--...", 8: "---..", 9: "----.",
+};
+// Letters are separated by spaces and words by " / ", e.g. "Hi Ava" → ".... .. / .- ...- .-".
+const toMorse = (text) =>
+  text
+    .toUpperCase()
+    .split(/\s+/)
+    .map((word) =>
+      [...word]
+        .map((character) => morseCode[character])
+        .filter(Boolean)
+        .join(" "),
+    )
+    .filter(Boolean)
+    .join(" / ");
 const state = {
   device: null,
   colour: null,
@@ -24,6 +47,7 @@ const state = {
   white: 0,
   effect: "steady",
   effectRun: 0,
+  morseName: "",
 };
 const connectButton = byId("lamp-connect");
 const disconnectButton = byId("lamp-disconnect");
@@ -207,7 +231,24 @@ byId("lamp-eyedropper").addEventListener("click", async () => {
     );
   }
 });
+// Returns false, leaving the current effect running, if there is nothing to send.
+const startMorse = (name) => {
+  const morse = toMorse(name?.slice(0, 24) || "");
+  if (!morse) {
+    effectSelect.value = state.effect;
+    if (name !== null)
+      message("lamp-status", "Use letters or numbers for Morse code.");
+    return false;
+  }
+  state.morseName = name.trim();
+  runMorse(state.morseName, morse);
+  return true;
+};
 const runEffect = async (effect) => {
+  if (effect === "morse") {
+    startMorse(prompt("Name to flash in Morse code:", state.morseName));
+    return;
+  }
   if (effect === "steady") {
     try {
       await sendColour(state.rgb, state.white);
@@ -260,6 +301,67 @@ const runEffect = async (effect) => {
     }
   }
 };
+// Timings in milliseconds. A dash lasts as long as one rainbow step, and a dot half that.
+const morseTiming = { ".": 500, "-": 1000 };
+const runMorse = async (name, morse) => {
+  stopEffect();
+  const runId = state.effectRun;
+  const running = () => state.effectRun === runId && state.colour;
+  const baseRgb =
+    state.rgb.some(Boolean) || state.white ? [...state.rgb] : [0, 255, 0];
+  const on = new Uint8Array([state.white, ...baseRgb]);
+  const off = new Uint8Array([0, 0, 0, 0]);
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  state.rgb = baseRgb;
+  state.effect = "morse";
+  effectSelect.value = "morse";
+  codeLabel.textContent = "morse · timed on/off writes";
+  code.textContent = `// ${name} → ${morse}
+const morse = "${morse}";
+const on = new Uint8Array([${[...on].join(", ")}]);
+const off = new Uint8Array([0, 0, 0, 0]);
+const timing = { ".": 500, "-": 1000 };
+const write = bytes => enqueueWrite(() => colour.${writeMethod()}(bytes));
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+while (state.effectRun === runId && state.colour) {
+  for (const symbol of morse) {
+    if (symbol in timing) {
+      await write(on);
+      await sleep(timing[symbol]);   // dot or dash
+      await write(off);
+      await sleep(500);              // gap inside a letter
+    } else {
+      await sleep(1000);             // " " and "/" stretch the gap between letters and words
+    }
+  }
+  await sleep(3000);                 // pause, then repeat
+}`;
+  message(
+    "lamp-status",
+    `Flashing “${name}” in Morse code: ${morse}. Choose Steady or a colour to stop.`,
+  );
+  try {
+    while (running()) {
+      for (const symbol of morse) {
+        if (!running()) return;
+        if (symbol in morseTiming) {
+          await writeColour(on);
+          await sleep(morseTiming[symbol]);
+          // Another colour may have been chosen while this symbol was lit.
+          if (!running()) return;
+          await writeColour(off);
+          await sleep(500);
+        } else {
+          await sleep(1000);
+        }
+      }
+      await sleep(3000);
+    }
+  } catch (error) {
+    stopEffect();
+    message("lamp-status", errorText(error));
+  }
+};
 effectSelect.addEventListener("change", () => runEffect(effectSelect.value));
 
 // A floating colour menu, so the controls stay in reach while scrolled.
@@ -285,6 +387,7 @@ pipButton.addEventListener("click", async () => {
       button { display: flex; align-items: center; gap: 10px; width: 100%; margin-bottom: 6px; border: 1px solid #d5ddd6; border-radius: 10px; background: #fff; padding: 9px 10px; color: inherit; font: inherit; text-align: left; cursor: pointer; }
       button:hover:not(:disabled), button[aria-pressed="true"] { border-color: #819b89; background: #edf4ed; }
       button:disabled { opacity: .45; cursor: default; }
+      input { display: block; width: 100%; margin-bottom: 6px; border: 1px solid #819b89; border-radius: 10px; background: #fff; padding: 9px 10px; color: inherit; font: inherit; outline: none; box-shadow: 0 0 0 3px #f5b22366; }
       .dot { width: 18px; height: 18px; flex: none; border: 1px solid #123a2a26; border-radius: 50%; }
       #pip-status { margin: 10px 0 0; color: #66746b; font-size: 12px; font-weight: 400; }
     `;
@@ -306,11 +409,40 @@ pipButton.addEventListener("click", async () => {
       button.addEventListener("click", () => source.click());
       return button;
     });
+    // Swap the Morse button for a same-sized text field; Enter sends, Escape cancels.
+    const editMorseName = (button) => {
+      const input = doc.createElement("input");
+      input.type = "text";
+      input.maxLength = 24;
+      input.value = state.morseName;
+      input.placeholder = "Type a name, then Enter";
+      input.setAttribute("aria-label", "Name to flash in Morse code");
+      let done = false;
+      const finish = (name) => {
+        if (done) return;
+        if (name !== null && !startMorse(name)) return;
+        done = true;
+        input.replaceWith(button);
+        syncPip();
+      };
+      input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") finish(input.value);
+        if (event.key === "Escape") finish(null);
+      });
+      input.addEventListener("blur", () => finish(null));
+      button.replaceWith(input);
+      input.focus();
+      input.select();
+    };
     const effectList = [...effectSelect.options].map((option) => {
       const button = doc.createElement("button");
       button.dataset.effect = option.value;
       button.textContent = option.textContent;
-      button.addEventListener("click", () => runEffect(option.value));
+      button.addEventListener("click", () =>
+        option.value === "morse"
+          ? editMorseName(button)
+          : runEffect(option.value),
+      );
       return button;
     });
     const status = doc.createElement("p");

@@ -84,7 +84,7 @@ Every demo runs on the user's device. Nothing is uploaded, and order data lives 
 **APIs:** Web Bluetooth (GATT) · BroadcastChannel · EyeDropper · Document PiP
 
 - **Needs:** a MiPow Playbulb, or any bulb that takes `[white, r, g, b]` writes on characteristic `0xFFFC`.
-- **Try:** **Connect lamp**, send colours, or pick one from the screen with the eyedropper. Choose **Pulse** or **Rainbow** from the Effect menu.
+- **Try:** **Connect lamp**, send colours, or pick one from the screen with the eyedropper. Choose **Pulse**, **Rainbow** or **Morse code** (it asks for a name, then flashes it) from the Effect menu.
 - **Try:** **Colour menu** opens the colours and effects in a floating Document PiP window, so they stay in reach while you scroll.
 - **Try:** mark an order _ready_ in another tab. The lamp turns green.
 - The code panel shows the exact bytes written for each command.
